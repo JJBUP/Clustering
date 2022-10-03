@@ -37,7 +37,7 @@
 - 由于每一次都重新计算质心，
 - 某些新计算的聚类的质心在下一轮的最近点的划分过程中没有一个点，这将导致无法进行下一轮的质心重新计算。
 
-<img src="聚类算法.assets/image-20221002225639081.png" alt="image-20221002225639081" style="zoom:80%;" />
+<img src="README.assets/image-20221002225639081.png" alt="image-20221002225639081" style="zoom:80%;" />
 
 **解决：**若新的聚类中心中没有划分到任何一个点，则保持聚类中心不变，期待下一轮能够重新获得点。(若硬是要计算，没有点计算的聚类中心为Nan)
 
@@ -71,9 +71,9 @@ $$
 
 **论文中**，对【聚类公式】使用举了例子，可仔细揣摩一下
 
-<img src="聚类算法.assets/image-20221002231908544.png" alt="image-20221002231908544" style="zoom:80%;" />
+<img src="README.assets/image-20221002231908544.png" alt="image-20221002231908544" style="zoom:80%;" />
 
-<img src="聚类算法.assets/image-20221002233032488.png" alt="image-20221002233032488" style="zoom:80%;" />
+<img src="README.assets/image-20221002233032488.png" alt="image-20221002233032488" style="zoom:80%;" />
 
 ### 1.3 算法 
 
@@ -85,7 +85,7 @@ $$
 4. 重新计算连通区域质心，作为下一轮待聚类的点
 5. 重复1~4，实现将每一层的簇，一步一步合并，最终合并为1个簇
 
-<img src="聚类算法.assets/image-20221003100027805.png" alt="image-20221003100027805" style="zoom:80%;" />
+<img src="README.assets/image-20221003100027805.png" alt="image-20221003100027805" style="zoom:80%;" />
 
 **（2）指定获得k个簇：**
 
@@ -111,7 +111,7 @@ $$
 
    
 
-<img src="聚类算法.assets/image-20221003100056150.png" alt="image-20221003100056150" style="zoom:80%;" />
+<img src="README.assets/image-20221003100056150.png" alt="image-20221003100056150" style="zoom:80%;" />
 
 **（2.2）本文章中实现方法：**
 
@@ -168,11 +168,11 @@ $$
 
 **（1）准确率**
 
-<img src="聚类算法.assets/image-20221003113737112.png" alt="image-20221003113737112" style="zoom:80%;" />
+<img src="README.assets/image-20221003113737112.png" alt="image-20221003113737112" style="zoom:80%;" />
 
 **（2）速度**
 
-<img src="聚类算法.assets/image-20221003133627654.png" alt="image-20221003133627654" style="zoom:80%;" />
+<img src="README.assets/image-20221003133627654.png" alt="image-20221003133627654" style="zoom:80%;" />
 
 ### 4.2 个人实验
 
@@ -186,7 +186,7 @@ $$
 | 2        | 5000   | 3        | 0.42     | 0.20     |
 | 3        | 50000  | 5        | 0.36     | 1.42     |
 
-<img src="聚类算法.assets/image-20221003142649839.png" alt="image-20221003142649839" style="zoom:80%;" />
+<img src="README.assets/image-20221003142649839.png" alt="image-20221003142649839" style="zoom:80%;" />
 
 **数据二**
 
@@ -196,7 +196,7 @@ $$
 | 2        | 5000   | 2        | 0.48     | 0.13     |
 | 3        | 50000  | 13       | 0.33     | 1.41     |
 
-<img src="聚类算法.assets/image-20221003142715249.png" alt="image-20221003142715249" style="zoom:80%;" />
+<img src="README.assets/image-20221003142715249.png" alt="image-20221003142715249" style="zoom:80%;" />
 
 **数据三**
 
@@ -206,7 +206,7 @@ $$
 | 2        | 5000   | 3        | 0.39     | 0.13     |
 | 3        | 50000  | 6        | 0.37     | 1.30     |
 
-<img src="聚类算法.assets/image-20221003142737715.png" alt="image-20221003142737715" style="zoom:80%;" />
+<img src="README.assets/image-20221003142737715.png" alt="image-20221003142737715" style="zoom:80%;" />
 
 
 
@@ -240,9 +240,9 @@ $$
 |        | kmeans(GPU)     | 2.606     |
 |        | **finch(CPU)**  | **2.181** |
 
-<img src="聚类算法.assets/image-20221003161201269.png" alt="image-20221003161201269" style="zoom:80%;" />
+<img src="README.assets/image-20221003161201269.png" alt="image-20221003161201269" style="zoom:80%;" />
 
-<img src="聚类算法.assets/image-20221003161245685.png" alt="image-20221003161245685" style="zoom:80%;" />
+<img src="README.assets/image-20221003161245685.png" alt="image-20221003161245685" style="zoom:80%;" />
 
 ## 2.数据二
 
@@ -258,9 +258,9 @@ $$
 |        | kmeans(GPU)     | 2.589     |
 |        | **finch(CPU)**  | **2.053** |
 
-<img src="聚类算法.assets/image-20221003161559162.png" alt="image-20221003161559162" style="zoom:80%;" />
+<img src="README.assets/image-20221003161559162.png" alt="image-20221003161559162" style="zoom:80%;" />
 
-<img src="聚类算法.assets/image-20221003161637826.png" alt="image-20221003161637826" style="zoom:80%;" />
+<img src="README.assets/image-20221003161637826.png" alt="image-20221003161637826" style="zoom:80%;" />
 
 ## 3.数据三
 
@@ -276,6 +276,6 @@ $$
 |        | kmeans(GPU)     | 2.631     |
 |        | **finch(CPU)**  | **2.101** |
 
-<img src="聚类算法.assets/image-20221003161920493.png" alt="image-20221003161920493" style="zoom:80%;" />
+<img src="README.assets/image-20221003161920493.png" alt="image-20221003161920493" style="zoom:80%;" />
 
-<img src="聚类算法.assets/image-20221003162016464.png" alt="image-20221003162016464" style="zoom:80%;" />
+<img src="README.assets/image-20221003162016464.png" alt="image-20221003162016464" style="zoom:80%;" />
