@@ -60,7 +60,7 @@ def k_means(data, k, max_time=100,true_centers = False):
         label = dist.argmin(1)  # 依据最近距离标记label[B,N]
 
         if torch.sum(label != last_label) == 0:  # label没有变化,跳出循环
-            # 是否返回簇质心最近得点最为真正得粗质心
+            # 是否返回簇质心最近得点最为真正得簇质心
             if true_centers:
                 centers = get_true_centers(data, centers)
             return label, centers
@@ -96,7 +96,7 @@ def k_means(data, k, max_time=100,true_centers = False):
                 new_centers = torch.cat([new_centers, centers_one_batch.unsqueeze(0)], 0)  # new_centers:[B,N,D]
         centers = new_centers  # new_centers:[B,N,D]
         time += 1  # while
-    # 是否返回簇质心最近得点最为真正得粗质心
+    # 是否返回簇质心最近得点最为真正得簇质心
     if true_centers:
         centers = get_true_centers(data, centers)
     return label, centers
