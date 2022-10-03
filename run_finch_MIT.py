@@ -4,7 +4,7 @@ import numpy as np
 import torch
 from sklearn import datasets
 import matplotlib.pyplot as plt
-from clustering.finch_MIT import FINCH
+from clustering_utils.finch_MIT import FINCH
 
 
 # Plot the results

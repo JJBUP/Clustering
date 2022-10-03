@@ -10,6 +10,7 @@ from sklearn.metrics.pairwise import euclidean_distances
 from scipy.sparse.csgraph import connected_components
 from scipy.sparse import csr_matrix, triu
 
+
 class FINCH():
     """
      A class to perform the FINCH clustering
@@ -169,12 +170,29 @@ class FINCH():
             'cluster_indices': cluster_indices_
         }}
 
-    def fit_req_cluster(self, X, k):
+    def _get_true_centers(self, X, cluster_centers):
+        """
+        获得簇中心距离最近得点
+        ----------------------------
+        :param X: 原始点数据 ndarray [N,D]
+        :param cluster_centers: 上一次簇的质心 ndarray
+        """
+        nbrs = NearestNeighbors(n_neighbors=1,  # 近邻k = 1，质心不在数据当中，所以不用担心取到自己
+                                metric=self.metric,
+                                n_jobs=self.n_jobs).fit(X)
+        # 返回邻接矩阵[n,n]（csr稀疏矩阵存储）
+        # a,b = nbrs.kneighbors(cluster_centers)
+        new_centers_idx = nbrs.kneighbors(cluster_centers, return_distance=False).reshape(-1)  # [N,K]-->[N*K]
+        cluster_centers = X[new_centers_idx]
+        return cluster_centers
+
+    def fit_req_cluster(self, X, k, true_center=False):
         """
         应用finch算法，实现多次聚类和指定聚类数目
         ----------
         :param k: 指定聚类数目的k int
         :param X: 原始点数据 ndarray [N,D]
+        :param true_center: 是否获得真实得质心 bool
         :return:result={
                 n_clusters_:当前联通数 int
                 labels_:当前所有点的label ndarray
@@ -204,9 +222,10 @@ class FINCH():
                 X, cluster_centers_, cluster_indices_)
             # 判断是否小于指定分区k，若小于则停止
             if n_clusters_ <= k:
-                praition = results['parition_' + str(i - 1)]
+                prev_praition = results['parition_' + str(i - 1)]
                 n_clusters_, labels_, cluster_centers_, cluster_indices_ = self._req_cluster(
-                    k, X, praition['n_clusters'], praition['cluster_centers'], praition['cluster_indices'])
+                    k, X, prev_praition['n_clusters'], prev_praition['cluster_centers'],
+                    prev_praition['cluster_indices'])
 
             results['parition_' + str(i)] = {
                 'n_clusters': n_clusters_,
@@ -216,5 +235,10 @@ class FINCH():
             }
             # print('Clusters in %s partition: %d' % (i, n_connected_components_))
             i += 1
+
+        parition = results['parition_' + str(i - 1)]
+        if true_center:
+            true_cluster_centers = self._get_true_centers(X, parition['cluster_centers'])
+            parition['cluster_centers'] = true_cluster_centers
         # 返回最后一次(刚刚大于等于k的聚类信息)
-        return results['parition_' + str(i - 1)]
+        return parition

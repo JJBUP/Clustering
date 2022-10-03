@@ -3,7 +3,7 @@ import time
 import torch
 from sklearn import datasets
 import matplotlib.pyplot as plt
-from clustering.finch_req_cluster import FINCH
+from clustering_utils.finch_req_cluster import FINCH
 
 
 # Plot the results

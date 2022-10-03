@@ -5,7 +5,7 @@ from sklearn import datasets
 import matplotlib.pyplot as plt
 
 # Plot the results
-from clustering.k_means import k_means
+from clustering_utils.k_means import k_means
 
 
 def plot(data, labels, centers, k):
@@ -14,7 +14,6 @@ def plot(data, labels, centers, k):
     plt.scatter(data[:, 0], data[:, 1], c=labels, s=1, cmap=cmap)
     for i, xy in enumerate(centers):
         plt.text(xy[0], xy[1], i)
-
     plt.show()
 
     return None
@@ -32,8 +31,8 @@ if __name__ == '__main__':
     X1 = torch.tensor(X1).unsqueeze(dim=0)
     X2 = torch.tensor(X2).unsqueeze(dim=0)
     X3 = torch.tensor(X3).unsqueeze(dim=0)
-    # device = torch.device("cuda:0")
-    device = torch.device("cpu")
+    device = torch.device("cuda:0")
+    # device = torch.device("cpu")
     X = torch.concat([X1, X2, X3], dim=0).to(device)
 
     # 应用算法
