@@ -5,8 +5,6 @@
 - 简单常用K-means的简单实现
 - 高效快速finch在pytorch中的应用
 
-如果对你有帮助请点一下star⭐，😀Thanks
-
 # 聚类算法分类
 
 - 基于划分的聚类(**k‐均值算法**、k‐medoids算法、k‐prototype算法)

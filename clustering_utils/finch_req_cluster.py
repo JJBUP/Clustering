@@ -34,8 +34,8 @@ class FINCH():
         层次聚类，使用finch paper 的Eq1将近邻合并
         ----------
         :param X: 原始点数据 ndarray [N,D]
-        :param prev_n_clusters: 上一次的聚类数目 int
-        :param prev_cluster_indices: 上一次簇的所有点的索引，list[list]
+        :param prev_n_clusters: 上一次的聚类中心 ndarray [N,D]，第一次默认所有点均为聚类中心
+        :param prev_cluster_indices: 上一次簇的所有点的索引，list[list]，第一次默认聚类中只有自身一个点
         :return:n_clusters_:当前联通数 int
                 labels_:当前所有点的label ndarray
                 cluster_centers_:当前簇的质心 ndarray
@@ -102,8 +102,8 @@ class FINCH():
             若n-k个点合并后大于k则继续合并，直到合并为k个点
         :param k: 指定聚类数目的k int
         :param X: 原始点数据 ndarray [N,D]
-        :param prev_n_clusters: 上一次的聚类数目 int
-        :param prev_cluster_centers: 上一次簇的质心 ndarray
+        :param prev_n_clusters: 上一次的聚类中心 ndarray [N,D]，第一次默认所有点均为聚类中心
+        :param prev_cluster_indices: 上一次簇的所有点的索引，list[list]，第一次默认聚类中只有自身一个点
         :param prev_cluster_indices: 上一次簇的所有点的索引，list[list]
         :return:n_clusters_:当前联通数 int
                 labels_:当前所有点的label ndarray
@@ -163,7 +163,7 @@ class FINCH():
         labels_ = np.arange(n_clusters_)
         cluster_centers_ = X
         cluster_indices_ = np.arange(n_clusters_).reshape((n_clusters_, 1)).tolist()
-        return {'parition_0': {
+        return {'parition_-1': {
             'n_clusters': n_clusters_,
             'labels': labels_,
             'cluster_centers': cluster_centers_,

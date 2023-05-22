@@ -2,6 +2,7 @@
 """
 FINCH - First Integer Neighbor Clustering Hierarchy Algorithm
 """
+import time
 
 # Author: Eren Cakmak <eren.cakmak@uni-konstanz.de>
 #
@@ -36,8 +37,8 @@ class FINCH():
         层次聚类，使用finch paper 的Eq1将近邻合并
         ----------
         :param X: 原始点数据 ndarray [N,D]
-        :param prev_n_clusters: 上一次的聚类数目 int
-        :param prev_cluster_indices: 上一次簇的所有点的索引，list[list]
+        :param prev_n_clusters: 上一次的聚类中心 ndarray [N,D]，第一次默认所有点均为聚类中心
+        :param prev_cluster_indices: 上一次簇的所有点的索引，list[list]，第一次默认聚类中只有自身一个点
         :return:n_clusters_:当前联通数 int
                 labels_:当前所有点的label ndarray
                 cluster_centers:当前簇的质心 ndarray
@@ -99,7 +100,7 @@ class FINCH():
 
     def fit(self, X):
         """
-        应用finch算法，实现多次聚类和指定聚类数目，返回【所有层次聚类得结果】
+        应用finch算法，实现多次聚类和指定聚类数目，返回【所有层次聚类得结果】,不计算轮廓系数
         ----------
         :param X: 原始点数据 ndarray [N,D]
         :return:result={{
@@ -129,9 +130,13 @@ class FINCH():
 
         i = 0
         while n_clusters_ > 1:
+            print("finch前cluster:", n_clusters_)
+            T1 = time.perf_counter()
             n_clusters_, labels_, cluster_centers_, cluster_core_indices_ = self._finch(
                 X, cluster_centers_, cluster_core_indices_)
-
+            T2 = time.perf_counter()
+            print("finch后cluster:", n_clusters_)
+            print("执行时间:", T2 - T1)
             if n_clusters_ == 1:
                 break
             else:
@@ -145,7 +150,6 @@ class FINCH():
                 'cluster_indices': cluster_core_indices_
             }
             i += 1
-
         return results  # 返回所有聚类结果
 
     def fit_predict(self, X):
@@ -208,6 +212,5 @@ class FINCH():
                 max_sil_score = sil_score
 
             i += 1
-
 
         return best_parition
